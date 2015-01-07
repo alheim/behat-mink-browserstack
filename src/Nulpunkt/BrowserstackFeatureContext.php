@@ -9,7 +9,8 @@ use \Behat\MinkExtension\Context\MinkContext;
 
 class BrowserstackFeatureContext extends MinkContext
 {
-    private static $driver = null;
+    private static $driver   = null;
+    private $concurencyLevel = 'feature';
 
     public function __construct($params)
     {
@@ -40,7 +41,8 @@ class BrowserstackFeatureContext extends MinkContext
 
         $this->browserstack_username = $params['username'];
         $this->browserstack_password = $params['password'];
-        $this->capabilities = isset($params['capabilities']) ? $params['capabilities'] : null;
+        $this->capabilities          = isset($params['capabilities']) ? $params['capabilities'] : null;
+        $this->concurencyLevel       = isset($params['concurencyLevel']) ? $params['concurencyLevel'] : 'feature';
     }
 
     /**
@@ -48,7 +50,9 @@ class BrowserstackFeatureContext extends MinkContext
      */
     public function after($event)
     {
-        //self::$driver->reset();
+        if ($this->concurencyLevel === 'scenario') {
+            self::$driver->reset();
+        }
     }
 
 }
