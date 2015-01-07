@@ -48,7 +48,7 @@ class BrowserstackFeatureContext extends MinkContext
      */
     public function after($event)
     {
-        self::$driver->reset();
+        //self::$driver->reset();
     }
 
 }
